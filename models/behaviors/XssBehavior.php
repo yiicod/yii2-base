@@ -88,8 +88,6 @@ class XssBehavior extends Behavior
         if (is_callable($this->allowedFilter)) {
             $allowed = call_user_func_array($this->allowedFilter, array('self' => $this, 'allowed' => $allowed));
         }
-//        var_dump($allowed);die;
-        parent::beforeValidate($event);
 
         $config = HTMLPurifier_Config::createDefault();
         $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
