@@ -54,7 +54,7 @@ class XssBehavior extends Behavior
         ];
     }
 
-    public function beforeValidate($event)
+    public function clearByXssAttributes()
     {
         // EDIT: modify this to whatever you need.
         $allowedAttrs = array('id', 'class');
@@ -193,6 +193,11 @@ class XssBehavior extends Behavior
         }
 
         $this->owner->setAttributes($attributes);
+    }
+
+    public function beforeValidate($event)
+    {
+        $this->clearByXssAttributes();
     }
 
 }
