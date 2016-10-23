@@ -24,5 +24,5 @@ php composer.phar require --prefer-dist yiicod/yii2-base "*"
 or add
 
 ```json
-"yiicod/base": "*"
+"yiicod/yii2-base": "*"
 ```
