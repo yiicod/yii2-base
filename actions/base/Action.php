@@ -31,7 +31,7 @@ class Action extends BaseAction
     public function findModel($id, $class)
     {
         if ($model = $class::findOne($id)) {
-            return model;
+            return $model;
         }
         throw new HttpException(404, 'The requested page does not exist.');
     }

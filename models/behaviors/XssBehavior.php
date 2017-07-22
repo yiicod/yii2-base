@@ -51,7 +51,7 @@ class XssBehavior extends Behavior
     public function events()
     {
         return [
-            ActiveRecord::EVENT_BEFORE_VALIDATE => 'beforeValidate',
+            ActiveRecord::EVENT_BEFORE_VALIDATE => 'clearByXssAttributes',
         ];
     }
 
@@ -195,15 +195,5 @@ class XssBehavior extends Behavior
         }
 
         $this->owner->setAttributes($attributes);
-    }
-
-    /**
-     * Clear events before validate
-     *
-     * @param Event $event
-     */
-    public function beforeValidate($event)
-    {
-        $this->clearByXssAttributes();
     }
 }

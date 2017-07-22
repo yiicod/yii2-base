@@ -7,6 +7,7 @@ use Throwable;
 /**
  * Class LoggerMessage
  * Logger helper
+ *
  * @package yiicod\base\helpers
  */
 class LoggerMessage
