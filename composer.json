@@ -1,7 +1,7 @@
 {
     "name": "yiicod/yii2-base",
     "description": "The base behaviors, helpers, etc. for the Yii2 framework",
-    "type": "yii-extension",
+    "type": "yii2-extension",
     "license": "New BSD License",
     "authors": [
         {
@@ -10,6 +10,9 @@
             "role": "Developer"
         }
     ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
     "autoload": {
         "psr-4": {
             "yiicod\\base\\": ""

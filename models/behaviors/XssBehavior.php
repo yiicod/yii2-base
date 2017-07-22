@@ -2,50 +2,51 @@
 
 namespace yiicod\base\models\behaviors;
 
-/**
- * Class XssBehavior
- *
- * Only for all
- * 
- * Xss protected
- *
- * @package app\models\behaviors
- */
 use HTMLPurifier;
 use HTMLPurifier_Config;
 use yii\base\Behavior;
+use yii\base\Event;
 use yii\db\ActiveRecord;
 
+/**
+ * Class XssBehavior
+ *
+ * @package yiicod\base\models\behaviors
+ */
 class XssBehavior extends Behavior
 {
-
     /**
+     * Exlude from purify attributes
      *
-     * @var type 
+     * @var array
      */
-    public $attributesExclude = array();
+    public $attributesExclude = [];
 
     /**
+     * Allowed purify filters
      *
-     * @var type 
+     * @var array
      */
-    public $allowedFilter = array();
+    public $allowedFilter = [];
 
     /**
+     * Config filter
      *
-     * @var type 
+     * @var array
      */
-    public $configFilter = array();
+    public $configFilter = [];
 
     /**
+     * Def filter
      *
-     * @var type 
+     * @var array
      */
-    public $defFilter = array();
+    public $defFilter = [];
 
     /**
-     * 
-     * @return Array
+     * Behavior event
+     *
+     * @return array
      */
     public function events()
     {
@@ -54,11 +55,14 @@ class XssBehavior extends Behavior
         ];
     }
 
+    /**
+     * Clear model attributes
+     */
     public function clearByXssAttributes()
     {
         // EDIT: modify this to whatever you need.
-        $allowedAttrs = array('id', 'class');
-        $allowed = array(
+        $allowedAttrs = ['id', 'class'];
+        $allowed = [
             'img[src|alt|title|width|height|style|data-mce-src|data-mce-json]',
             'figure', 'figcaption', 'small[style]',
             'video[src|type|width|height|poster|preload|controls]', 'source[src|type]',
@@ -75,8 +79,8 @@ class XssBehavior extends Behavior
             'aside[style|class]', 'header[style|class]', 'footer[style|class]',
             'address', 'hgroup', 'figure', 'figcaption',
             'video[src|type|width|height|poster|preload|controls|loop|autoplay]',
-            's', 'var', 'sub', 'sup', 'mark', 'wbr', 'ins', 'del', 'blockquote', 'q', '*[style|class|id|width|height|alt|title|target|src]'
-        );
+            's', 'var', 'sub', 'sup', 'mark', 'wbr', 'ins', 'del', 'blockquote', 'q', '*[style|class|id|width|height|alt|title|target|src]',
+        ];
         foreach ($allowed as $key => $element) {
             foreach ($allowedAttrs as $attr) {
                 if (strpos($element, $attr . '|') === false && strpos($element, '|' . $attr) === false) {
@@ -86,7 +90,7 @@ class XssBehavior extends Behavior
         }
 
         if (is_callable($this->allowedFilter)) {
-            $allowed = call_user_func_array($this->allowedFilter, array('self' => $this, 'allowed' => $allowed));
+            $allowed = call_user_func_array($this->allowedFilter, ['self' => $this, 'allowed' => $allowed]);
         }
 
         $config = HTMLPurifier_Config::createDefault();
@@ -98,20 +102,20 @@ class XssBehavior extends Behavior
         // o Vimeo.com
         $config->set('HTML.SafeIframe', true);
         $config->set('URI.SafeIframeRegexp', '%^(https?:)?(http?:)?//(www.youtube.|player.vimeo.|maps.google.|www.slideshare.)%');
-//        $config->set('URI.SafeIframeRegexp', '%^(http:|https:)?//(www.youtube(?:-nocookie)?.com/embed/|player.vimeo.com/video/)%');        
-        $config->set('Attr.AllowedFrameTargets', array(
+//        $config->set('URI.SafeIframeRegexp', '%^(http:|https:)?//(www.youtube(?:-nocookie)?.com/embed/|player.vimeo.com/video/)%');
+        $config->set('Attr.AllowedFrameTargets', [
             '_blank',
             '_self',
             '_parent',
             '_top',
-        ));
-        $config->set('URI.AllowedSchemes', array(
-            'http' => TRUE,
-            'https' => TRUE,
-            'mailto' => TRUE,
-            'target' => TRUE,
-            'ftp' => TRUE
-        ));
+        ]);
+        $config->set('URI.AllowedSchemes', [
+            'http' => true,
+            'https' => true,
+            'mailto' => true,
+            'target' => true,
+            'ftp' => true,
+        ]);
         $config->set('Attr.EnableID', true);
         $config->set('HTML.Allowed', implode(',', $allowed));
         // Set some HTML5 properties
@@ -130,7 +134,7 @@ class XssBehavior extends Behavior
             $def->addElement('figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow', 'Common');
             $def->addElement('figcaption', 'Inline', 'Flow', 'Common');
             // http://developers.whatwg.org/the-video-element.html#the-video-element
-            $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', array(
+            $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', [
                 'src' => 'URI',
                 'type' => 'Text',
                 'width' => 'Length',
@@ -138,11 +142,11 @@ class XssBehavior extends Behavior
                 'poster' => 'URI',
                 'preload' => 'Enum#auto,metadata,none',
                 'controls' => 'Bool',
-            ));
-            $def->addElement('source', 'Block', 'Flow', 'Common', array(
+            ]);
+            $def->addElement('source', 'Block', 'Flow', 'Common', [
                 'src' => 'URI',
                 'type' => 'Text',
-            ));
+            ]);
             // http://developers.whatwg.org/text-level-semantics.html
             $def->addElement('s', 'Inline', 'Inline', 'Common');
             $def->addElement('var', 'Inline', 'Inline', 'Common');
@@ -151,12 +155,12 @@ class XssBehavior extends Behavior
             $def->addElement('mark', 'Inline', 'Inline', 'Common');
             $def->addElement('wbr', 'Inline', 'Empty', 'Core');
             // http://developers.whatwg.org/edits.html
-            $def->addElement('ins', 'Block', 'Flow', 'Common', array('cite' => 'URI', 'datetime' => 'CDATA'));
-            $def->addElement('del', 'Block', 'Flow', 'Common', array('cite' => 'URI', 'datetime' => 'CDATA'));
+            $def->addElement('ins', 'Block', 'Flow', 'Common', ['cite' => 'URI', 'datetime' => 'CDATA']);
+            $def->addElement('del', 'Block', 'Flow', 'Common', ['cite' => 'URI', 'datetime' => 'CDATA']);
             // TinyMCE
             $def->addAttribute('img', 'data-mce-src', 'Text');
             $def->addAttribute('img', 'data-mce-json', 'Text');
-            //video            
+            //video
             $def->addAttribute('video', 'loop', 'Text');
             $def->addAttribute('video', 'autoplay', 'Text');
             // Others
@@ -168,18 +172,16 @@ class XssBehavior extends Behavior
             $def->addAttribute('tr', 'height', 'Text');
             $def->addAttribute('tr', 'border', 'Text');
 
-
             if (is_callable($this->defFilter)) {
-                $def = call_user_func_array($this->defFilter, array('self' => $this, 'def' => $def));
+                $def = call_user_func_array($this->defFilter, ['self' => $this, 'def' => $def]);
             }
         }
         if (is_callable($this->configFilter)) {
-            $config = call_user_func_array($this->configFilter, array('self' => $this, 'config' => $config));
+            $config = call_user_func_array($this->configFilter, ['self' => $this, 'config' => $config]);
         }
         $p = new HTMLPurifier($config);
 
-        $attributes = array();
-
+        $attributes = [];
         foreach ($this->owner->getAttributes() as $key => $value) {
             if (!in_array($key, $this->attributesExclude)) {
                 if (null !== $value) {
@@ -195,9 +197,13 @@ class XssBehavior extends Behavior
         $this->owner->setAttributes($attributes);
     }
 
+    /**
+     * Clear events before validate
+     *
+     * @param Event $event
+     */
     public function beforeValidate($event)
     {
         $this->clearByXssAttributes();
     }
-
 }

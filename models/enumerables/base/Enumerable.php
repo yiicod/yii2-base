@@ -1,5 +1,7 @@
 <?php
+
 namespace yiicod\base\models\enumerables\base;
+
 /**
  * Enumerable is the base class for all enumerable types.
  *
@@ -25,16 +27,67 @@ abstract class Enumerable
      * Get label of the enumerable
      *
      * @static
+     *
      * @param $value
+     *
      * @return mixed
      */
-    abstract public static function get($value);
+    public static function get($value)
+    {
+        $list = static::data();
+
+        return isset($list[$value]) ? $list[$value] : $value;
+    }
 
     /**
      * Get list of the enumerable
      *
      * @static
+     *
+     * @param array $exclude
+     *
      * @return array
      */
-    abstract public static function listData();
+    public static function listData(array $exclude = []): array
+    {
+        $list = static::data();
+        foreach ($exclude as $item) {
+            unset($list[$item]);
+        }
+
+        return $list;
+    }
+
+    /**
+     * Check if value in into keys
+     *
+     * @param $value
+     *
+     * @return bool
+     */
+    public static function inKeys($value): bool
+    {
+        return in_array($value, array_keys(static::listData([])));
+    }
+
+    /**
+     * Check if value in into values
+     *
+     * @param $value
+     *
+     * @return bool
+     */
+    public static function inValues($value): bool
+    {
+        return in_array($value, array_keys(static::listData([])));
+    }
+
+    /**
+     * Get list of the enumerable
+     *
+     * @static
+     *
+     * @return array
+     */
+    abstract protected static function data(): array;
 }
