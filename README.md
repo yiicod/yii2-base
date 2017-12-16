@@ -1,7 +1,5 @@
-Common thinks
-=============
-
-This is base library for extensions and apps:
+The base library for extensions and apps
+========================================
 
 Installation
 ------------
