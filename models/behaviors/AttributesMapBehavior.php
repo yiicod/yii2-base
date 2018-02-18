@@ -87,7 +87,7 @@ class AttributesMapBehavior extends Behavior
      */
     public function __get($name)
     {
-        if (strpos($name, 'field') === 0 && $this->hasFieldByModelMap($name)) {
+        if (0 === strpos($name, 'field') && $this->hasFieldByModelMap($name)) {
             return $this->getFieldByModelMap($name);
         }
         if ($this->hasAttr($name)) {
@@ -104,7 +104,7 @@ class AttributesMapBehavior extends Behavior
      */
     public function canGetProperty($name, $checkVars = true)
     {
-        if (strpos($name, 'field') === 0 && $this->hasFieldByModelMap($name)) {
+        if (0 === strpos($name, 'field') && $this->hasFieldByModelMap($name)) {
             return true;
         }
 

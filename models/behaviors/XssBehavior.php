@@ -83,7 +83,7 @@ class XssBehavior extends Behavior
         ];
         foreach ($allowed as $key => $element) {
             foreach ($allowedAttrs as $attr) {
-                if (strpos($element, $attr . '|') === false && strpos($element, '|' . $attr) === false) {
+                if (false === strpos($element, $attr . '|') && false === strpos($element, '|' . $attr)) {
                     $allowed[$key] = $element = str_replace(']', '|' . $attr . ']', $element);
                 }
             }

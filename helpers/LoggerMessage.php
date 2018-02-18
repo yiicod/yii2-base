@@ -80,7 +80,7 @@ class LoggerMessage
             unset($traces[0]); //Remove LoggerMessage from trace
             $count = 0;
             foreach ($traces as $trace) {
-                if (isset($trace['file'], $trace['line']) && strpos($trace['file'], YII2_PATH) !== 0) {
+                if (isset($trace['file'], $trace['line']) && 0 !== strpos($trace['file'], YII2_PATH)) {
                     $msg .= "\nin " . $trace['file'] . ' (' . $trace['line'] . ')';
                     if (++$count >= $traceLevel) {
                         break;

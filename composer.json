@@ -2,7 +2,7 @@
     "name": "yiicod/yii2-base",
     "description": "The base behaviors, helpers, etc. for the Yii2 framework",
     "type": "yii2-extension",
-    "license": "New BSD License",
+    "license": "MIT",
     "authors": [
         {
             "name": "Alexey Orlov",
@@ -11,8 +11,14 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "*"
+        "yiisoft/yii2": "2.*"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "yiicod\\base\\": ""

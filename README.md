@@ -1,8 +1,9 @@
 The base library for extensions and apps
 ========================================
 
-Installation
-------------
+[![Latest Stable Version](https://poser.pugx.org/yiicod/yii2-base/v/stable)](https://packagist.org/packages/yiicod/yii2-base) [![Total Downloads](https://poser.pugx.org/yiicod/yii2-base/downloads)](https://packagist.org/packages/yiicod/yii2-base) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiicod/yii2-base/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiicod/yii2-base/?branch=master)[![Code Climate](https://codeclimate.com/github/yiicod/yii2-base/badges/gpa.svg)](https://codeclimate.com/github/yiicod/yii2-base)
+
+#### Installation
 Either run
 
 ```
@@ -14,12 +15,10 @@ or add
 ```json
 "yiicod/yii2-base": "*"
 ```
-Usage action
-------------
+#### Usage action
 - yiicod\base\actions\base\Action. Methods: performAjaxValidation, loadModel
 
-Usage model
------------
+#### Usage model
 ```php
     /**
      * Attributes mapper(Dynamic attr by mapping).
@@ -41,6 +40,5 @@ Usage model
         'class' => 'yiicod\base\models\behaviors\XssBehavior',
     ]
 ```
-Usage Enum
-----------
+#### Usage Enum
 - Abstract class Enumerable for enum
