@@ -1,23 +1,11 @@
 <?php
 
-namespace yiicod\base\actions\base;
+namespace yiicod\base\traits;
 
-use yii\base\Action as BaseAction;
-use yii\base\Model;
 use yii\db\ActiveRecordInterface;
 use yii\web\HttpException;
 
-/**
- * Class BaseAction
- * Base action for extensions
- *
- * @author Virchenko Maksim <muslim1992@gmail.com>
- *
- * @deprecated This class was deprecated. Use \yiicod\base\traits\FindRecordTrait instead.
- *
- * @package yiicod\base\helpers
- */
-class Action extends BaseAction
+trait FindRecordTrait
 {
     /**
      * Returns the data model based on the primary key given in the param.
